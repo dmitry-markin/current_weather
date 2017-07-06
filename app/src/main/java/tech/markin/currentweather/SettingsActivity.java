@@ -14,6 +14,11 @@ public class SettingsActivity extends Activity {
         super.onCreate(savedInstanceState);
 
         PreferenceManager.setDefaultValues(this, R.xml.preferences, false);
+
+        if (!AlarmScheduler.isAlreadyScheduled(this)) {
+            AlarmScheduler.schedule(this);
+        }
+
         getFragmentManager().beginTransaction()
                 .replace(android.R.id.content, new SettingsFragment())
                 .commit();

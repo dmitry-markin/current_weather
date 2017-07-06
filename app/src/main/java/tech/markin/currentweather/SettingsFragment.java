@@ -6,7 +6,6 @@ import android.preference.EditTextPreference;
 import android.preference.Preference;
 import android.preference.ListPreference;
 import android.preference.PreferenceFragment;
-import android.preference.PreferenceManager;
 
 /**
  * Created by Dmitry on 05.07.2017.
@@ -45,13 +44,14 @@ public class SettingsFragment extends PreferenceFragment
             prefInterval.setSummary(index >= 0
                                         ? prefInterval.getEntries()[index]
                                         : null);
+            AlarmScheduler.schedule(prefInterval.getContext());
         }
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        getPreferenceScreen().getSharedPreferences()
+        getPreferenceManager().getSharedPreferences()
                 .registerOnSharedPreferenceChangeListener(this);
     }
 
