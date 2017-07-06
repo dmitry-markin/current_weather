@@ -34,4 +34,11 @@
     <!-- For android >= 4.2 and < 5.0
     <string name="pref_show_lockscreen_title">Show on lock-screen</string>
     <string name="pref_show_lockscreen_summary">Show lock-screen widget</string> -->
+
+    <string name="error">Error</string>
+    <string name="unknown_error">Unknown error</string>
+    <string name="no_connection_error">No network connection</string>
+    <string name="network_error">No connection to the internet</string>
+    <string name="timeout_error">Connection timed out</string>
+    <string name="server_error">Server is down</string>
 </resources>

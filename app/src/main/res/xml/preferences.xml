@@ -3,7 +3,8 @@
     <EditTextPreference
         android:key="pref_location"
         android:title="@string/pref_location_title"
-        android:defaultValue="@string/pref_location_default" />
+        android:defaultValue="@string/pref_location_default"
+        android:singleLine="true" />
     <ListPreference
         android:key="pref_interval"
         android:title="@string/pref_interval_title"

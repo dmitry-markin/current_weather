@@ -8,6 +8,7 @@ public class BootCompletedReceiver extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        AlarmScheduler.schedule(context);
+        UpdateScheduler.updateNow(context);
+        UpdateScheduler.scheduleUpdates(context);
     }
 }

@@ -37,6 +37,7 @@ public class SettingsFragment extends PreferenceFragment
         if (key.equals(KEY_PREF_LOCATION)) {
             Preference prefLocation = findPreference(key);
             prefLocation.setSummary(sharedPreferences.getString(key, ""));
+            UpdateScheduler.updateNow(prefLocation.getContext());
 
         } else if (key.equals(KEY_PREF_INTERVAL)) {
             ListPreference prefInterval = (ListPreference)findPreference(key);
@@ -44,7 +45,7 @@ public class SettingsFragment extends PreferenceFragment
             prefInterval.setSummary(index >= 0
                                         ? prefInterval.getEntries()[index]
                                         : null);
-            AlarmScheduler.schedule(prefInterval.getContext());
+            UpdateScheduler.scheduleUpdates(prefInterval.getContext());
         }
     }
 

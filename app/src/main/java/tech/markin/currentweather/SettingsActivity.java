@@ -15,8 +15,9 @@ public class SettingsActivity extends Activity {
 
         PreferenceManager.setDefaultValues(this, R.xml.preferences, false);
 
-        if (!AlarmScheduler.isAlreadyScheduled(this)) {
-            AlarmScheduler.schedule(this);
+        if (!UpdateScheduler.isAlreadyScheduled(this)) {
+            UpdateScheduler.updateNow(this);
+            UpdateScheduler.scheduleUpdates(this);
         }
 
         getFragmentManager().beginTransaction()

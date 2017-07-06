@@ -7,21 +7,20 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.SystemClock;
 import android.preference.PreferenceManager;
-import android.widget.Toast;
 
 /**
  * Created by Dmitry on 05.07.2017.
  */
 
-class AlarmScheduler {
-    public static boolean isAlreadyScheduled(Context context) {
+class UpdateScheduler {
+    static boolean isAlreadyScheduled(Context context) {
         Intent intent = new Intent(context, UpdateWeatherReceiver.class);
         PendingIntent alarmIntent = PendingIntent
                 .getBroadcast(context, 0, intent, PendingIntent.FLAG_NO_CREATE);
         return alarmIntent != null;
     }
 
-    static void schedule(Context context) {
+    static void scheduleUpdates(Context context) {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
         int interval = Integer.parseInt(
                 preferences.getString(SettingsFragment.KEY_PREF_INTERVAL, "0"));
@@ -29,7 +28,18 @@ class AlarmScheduler {
         AlarmManager alarmManager = (AlarmManager)context.getSystemService(Context.ALARM_SERVICE);
         Intent intent = new Intent(context, UpdateWeatherReceiver.class);
         PendingIntent alarmIntent = PendingIntent.getBroadcast(context, 0, intent, 0);
-        alarmManager.setInexactRepeating(AlarmManager.ELAPSED_REALTIME_WAKEUP,
-                SystemClock.elapsedRealtime(), interval * 1000, alarmIntent);
+        if (interval != 0) {
+            alarmManager.setInexactRepeating(AlarmManager.ELAPSED_REALTIME_WAKEUP,
+                                             SystemClock.elapsedRealtime() + interval * 60 * 1000,
+                                             interval * 60 * 1000, alarmIntent);
+        } else {
+            alarmManager.cancel(alarmIntent);
+            UpdateWeatherService.hideNotification(context);
+        }
+    }
+
+    static void updateNow(Context context) {
+        Intent intent = new Intent(context, UpdateWeatherReceiver.class);
+        context.sendBroadcast(intent);
     }
 }
