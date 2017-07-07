@@ -31,6 +31,9 @@ import java.util.Locale;
 public class UpdateWeatherService extends Service {
     private static final int NOTIFICATION_ID = 1;
     static final String APPID = "949c2afc0a004b0908a6dbfdd4e2c9ef";
+    static final String LAST_WEATHER_SHARED_PREFS = "tech.markin.currentweather_LastWeather";
+    static final String TITLE_KEY = "title";
+    static final String TEXT_KEY = "text";
 
     public UpdateWeatherService() {
     }
@@ -53,12 +56,10 @@ public class UpdateWeatherService extends Service {
                             String tempString = String.format(Locale.ENGLISH, "%.1f °C", temp);
                             String place = response.getString("name");
                             String country = response.getJSONObject("sys").getString("country");
-                            updateNotification(UpdateWeatherService.this, tempString,
-                                               "in " + place + ", " + country);
+                            updateWeather(tempString, "in " + place + ", " + country);
                         } catch (JSONException e) {
-                            updateNotification(UpdateWeatherService.this,
-                                    getResources().getString(R.string.error),
-                                    getResources().getString(R.string.unknown_error));
+                            updateWeather(getResources().getString(R.string.error),
+                                          getResources().getString(R.string.unknown_error));
                         }
 
                         stopSelf(startId);
@@ -89,8 +90,7 @@ public class UpdateWeatherService extends Service {
                                 message = getResources().getString(R.string.unknown_error);
                             }
 
-                            updateNotification(UpdateWeatherService.this,
-                                    getResources().getString(R.string.error), message);
+                            updateWeather(getResources().getString(R.string.error), message);
 
                         } catch (UnsupportedEncodingException e) {
                             throw new RuntimeException(e);
@@ -115,7 +115,28 @@ public class UpdateWeatherService extends Service {
         return null;
     }
 
-    private static void updateNotification(Context context, CharSequence title, CharSequence text) {
+    private void updateWeather(String title, String text) {
+        SharedPreferences lastWeather = getSharedPreferences(
+                LAST_WEATHER_SHARED_PREFS, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = lastWeather.edit();
+        editor.putString(TITLE_KEY, title);
+        editor.putString(TEXT_KEY, text);
+        editor.apply();
+
+        showNotification(this);
+
+        //KeyguardManager km = (KeyguardManager)getSystemService(Context.KEYGUARD_SERVICE);
+        //if (km.inKeyguardRestrictedInputMode()) {
+        //    showNotification(this);
+        //}
+    }
+
+    public static void showNotification(Context context) {
+        SharedPreferences lastWeather = context.getSharedPreferences(
+                LAST_WEATHER_SHARED_PREFS, Context.MODE_PRIVATE);
+        String title = lastWeather.getString(TITLE_KEY, "");
+        String text = lastWeather.getString(TEXT_KEY, "");
+
         Notification notification  = new NotificationCompat.Builder(context)
                 .setSmallIcon(R.mipmap.ic_launcher)
                 .setContentTitle(title)
