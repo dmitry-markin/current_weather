@@ -2,6 +2,7 @@ package tech.markin.currentweather;
 
 import android.app.Notification;
 import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
@@ -137,11 +138,21 @@ public class UpdateWeatherService extends Service {
         String title = lastWeather.getString(TITLE_KEY, "");
         String text = lastWeather.getString(TEXT_KEY, "");
 
+        Intent updateIntent = new Intent(context, UpdateWeatherReceiver.class);
+        updateIntent.putExtra(UpdateWeatherReceiver.ACTIONS_EXTRA_KEY,
+                              UpdateWeatherReceiver.ACTION_UPDATE
+                              | UpdateWeatherReceiver.ACTION_SCHEDULE
+                              | UpdateWeatherReceiver.ACTION_NOTIFY_USER);
+        PendingIntent pendingUpdateIntent =
+                PendingIntent.getBroadcast(context, 0, updateIntent,
+                                           PendingIntent.FLAG_UPDATE_CURRENT);
+
         Notification notification  = new NotificationCompat.Builder(context)
                 .setSmallIcon(R.mipmap.ic_launcher)
                 .setContentTitle(title)
                 .setContentText(text)
                 .setVisibility(Notification.VISIBILITY_PUBLIC)
+                .setContentIntent(pendingUpdateIntent)
                 .build();
         notification.flags |= Notification.FLAG_NO_CLEAR;
 

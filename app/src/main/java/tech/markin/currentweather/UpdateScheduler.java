@@ -27,6 +27,8 @@ class UpdateScheduler {
 
         AlarmManager alarmManager = (AlarmManager)context.getSystemService(Context.ALARM_SERVICE);
         Intent intent = new Intent(context, UpdateWeatherReceiver.class);
+        intent.putExtra(UpdateWeatherReceiver.ACTIONS_EXTRA_KEY,
+                        UpdateWeatherReceiver.ACTION_UPDATE);
         PendingIntent alarmIntent = PendingIntent.getBroadcast(context, 0, intent, 0);
         if (interval != 0) {
             alarmManager.setInexactRepeating(AlarmManager.ELAPSED_REALTIME_WAKEUP,
@@ -38,8 +40,9 @@ class UpdateScheduler {
         }
     }
 
-    static void updateNow(Context context) {
+    static void updateNow(Context context, int actions) {
         Intent intent = new Intent(context, UpdateWeatherReceiver.class);
+        intent.putExtra(UpdateWeatherReceiver.ACTIONS_EXTRA_KEY, actions);
         context.sendBroadcast(intent);
     }
 }

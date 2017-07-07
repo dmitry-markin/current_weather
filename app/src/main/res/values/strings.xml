@@ -41,4 +41,6 @@
     <string name="network_error">No connection to the internet</string>
     <string name="timeout_error">Connection timed out</string>
     <string name="server_error">Server is down</string>
+
+    <string name="updating_weather_toast">Updating weather...</string>
 </resources>

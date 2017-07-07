@@ -16,8 +16,8 @@ public class SettingsActivity extends Activity {
         PreferenceManager.setDefaultValues(this, R.xml.preferences, false);
 
         if (!UpdateScheduler.isAlreadyScheduled(this)) {
-            UpdateScheduler.updateNow(this);
-            UpdateScheduler.scheduleUpdates(this);
+            UpdateScheduler.updateNow(this, UpdateWeatherReceiver.ACTION_UPDATE
+                                            | UpdateWeatherReceiver.ACTION_SCHEDULE);
         }
 
         getFragmentManager().beginTransaction()
