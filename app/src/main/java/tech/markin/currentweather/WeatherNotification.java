@@ -51,7 +51,8 @@ class WeatherNotification {
                 .setSmallIcon(R.drawable.icon)
                 .setContentTitle(title.isEmpty() ? "--- °C" : title)
                 .setVisibility(Notification.VISIBILITY_PUBLIC)
-                .setContentIntent(pendingIntent);
+                .setContentIntent(pendingIntent)
+                .setWhen(0);
 
         if (!text.isEmpty()) {
             builder.setContentText(text);
