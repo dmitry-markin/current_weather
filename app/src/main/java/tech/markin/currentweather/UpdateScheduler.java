@@ -13,33 +13,31 @@ import android.preference.PreferenceManager;
  */
 
 class UpdateScheduler {
-    static boolean isAlreadyScheduled(Context context) {
-        Intent intent = new Intent(context, UpdateWeatherReceiver.class);
+    static boolean isAlarmScheduled(Context context) {
+        Intent intent = new Intent(context, UpdateAlarmReceiver.class);
         PendingIntent alarmIntent = PendingIntent
                 .getBroadcast(context, 0, intent, PendingIntent.FLAG_NO_CREATE);
         return alarmIntent != null;
     }
 
-    static void scheduleUpdates(Context context) {
+    static void updateAndSchedule(Context context) {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
         int interval = Integer.parseInt(
                 preferences.getString(SettingsFragment.KEY_PREF_INTERVAL, "0"));
 
         AlarmManager alarmManager = (AlarmManager)context.getSystemService(Context.ALARM_SERVICE);
-        Intent intent = new Intent(context, UpdateWeatherReceiver.class);
+
+        Intent intent = new Intent(context, UpdateAlarmReceiver.class);
         PendingIntent alarmIntent = PendingIntent.getBroadcast(context, 0, intent, 0);
+
         if (interval != 0) {
             alarmManager.setInexactRepeating(AlarmManager.ELAPSED_REALTIME_WAKEUP,
                                              SystemClock.elapsedRealtime() + interval * 60 * 1000,
                                              interval * 60 * 1000, alarmIntent);
+            context.sendBroadcast(intent);
         } else {
             alarmManager.cancel(alarmIntent);
             UpdateWeatherService.hideNotification(context);
         }
-    }
-
-    static void updateNow(Context context) {
-        Intent intent = new Intent(context, UpdateWeatherReceiver.class);
-        context.sendBroadcast(intent);
     }
 }

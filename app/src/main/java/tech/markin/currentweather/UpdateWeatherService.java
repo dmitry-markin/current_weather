@@ -2,6 +2,7 @@ package tech.markin.currentweather;
 
 import android.app.Notification;
 import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
@@ -31,9 +32,9 @@ import java.util.Locale;
 public class UpdateWeatherService extends Service {
     private static final int NOTIFICATION_ID = 1;
     static final String APPID = "949c2afc0a004b0908a6dbfdd4e2c9ef";
-
-    public UpdateWeatherService() {
-    }
+    static final String LAST_WEATHER_SHARED_PREFS = "tech.markin.currentweather_LastWeather";
+    static final String TITLE_KEY = "title";
+    static final String TEXT_KEY = "text";
 
     @Override
     public int onStartCommand(Intent intent, int flags, final int startId) {
@@ -53,14 +54,13 @@ public class UpdateWeatherService extends Service {
                             String tempString = String.format(Locale.ENGLISH, "%.1f °C", temp);
                             String place = response.getString("name");
                             String country = response.getJSONObject("sys").getString("country");
-                            updateNotification(UpdateWeatherService.this, tempString,
-                                               "in " + place + ", " + country);
+                            setWeatherLine(tempString + " in " + place + ", " + country);
+                            setErrorLine("");
                         } catch (JSONException e) {
-                            updateNotification(UpdateWeatherService.this,
-                                    getResources().getString(R.string.error),
-                                    getResources().getString(R.string.unknown_error));
+                            setErrorLine(getResources().getString(R.string.parsing_error) + " " +
+                                         getResources().getString(R.string.update_now_hint));
                         }
-
+                        showNotification(UpdateWeatherService.this);
                         stopSelf(startId);
                     }
                 },
@@ -68,34 +68,32 @@ public class UpdateWeatherService extends Service {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         try {
-                            String message;
+                            String errorStr;
                             if (error instanceof NoConnectionError) {
-                                message = getResources().getString(R.string.no_connection_error);
+                                errorStr = getResources().getString(R.string.no_connection_error);
                             } else if (error instanceof NetworkError) {
-                                message = getResources().getString(R.string.network_error);
+                                errorStr = getResources().getString(R.string.network_error);
                             } else if (error instanceof TimeoutError) {
-                                message = getResources().getString(R.string.timeout_error);
+                                errorStr = getResources().getString(R.string.timeout_error);
                             } else if (error instanceof ServerError) {
-                                message = getResources().getString(R.string.server_error);
+                                errorStr = getResources().getString(R.string.server_error);
                             } else if (error.networkResponse != null) {
                                 try {
                                     String body = new String(error.networkResponse.data, "UTF-8");
                                     JSONObject response = new JSONObject(body);
-                                    message = response.getString("message");
+                                    errorStr = response.getString("message");
                                 } catch (JSONException e) {
-                                    message = getResources().getString(R.string.unknown_error);
+                                    errorStr = getResources().getString(R.string.unknown_error);
                                 }
                             } else {
-                                message = getResources().getString(R.string.unknown_error);
+                                errorStr = getResources().getString(R.string.unknown_error);
                             }
-
-                            updateNotification(UpdateWeatherService.this,
-                                    getResources().getString(R.string.error), message);
-
+                            setErrorLine(errorStr + " "
+                                         + getResources().getString(R.string.update_now_hint));
                         } catch (UnsupportedEncodingException e) {
                             throw new RuntimeException(e);
                         }
-
+                        showNotification(UpdateWeatherService.this);
                         stopSelf(startId);
                     }
                 });
@@ -115,13 +113,42 @@ public class UpdateWeatherService extends Service {
         return null;
     }
 
-    private static void updateNotification(Context context, CharSequence title, CharSequence text) {
-        Notification notification  = new NotificationCompat.Builder(context)
+    private void setWeatherLine(String weatherLine) {
+        SharedPreferences lastWeather = getSharedPreferences(
+                LAST_WEATHER_SHARED_PREFS, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = lastWeather.edit();
+        editor.putString(TITLE_KEY, weatherLine);
+        editor.apply();
+    }
+
+    private void setErrorLine(String errorLine) {
+        SharedPreferences lastWeather = getSharedPreferences(
+                LAST_WEATHER_SHARED_PREFS, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = lastWeather.edit();
+        editor.putString(TEXT_KEY, errorLine);
+        editor.apply();
+    }
+
+    public static void showNotification(Context context) {
+        SharedPreferences lastWeather = context.getSharedPreferences(
+                LAST_WEATHER_SHARED_PREFS, Context.MODE_PRIVATE);
+        String title = lastWeather.getString(TITLE_KEY, "");
+        String text = lastWeather.getString(TEXT_KEY, "");
+
+        Intent forceUpdateIntent = new Intent(context, ForceUpdateReceiver.class);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0, forceUpdateIntent, 0);
+
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(context)
                 .setSmallIcon(R.mipmap.ic_launcher)
-                .setContentTitle(title)
-                .setContentText(text)
+                .setContentTitle(title.isEmpty() ? "--- °C" : title)
                 .setVisibility(Notification.VISIBILITY_PUBLIC)
-                .build();
+                .setContentIntent(pendingIntent);
+
+        if (!text.isEmpty()) {
+            builder.setContentText(text);
+        }
+
+        Notification notification = builder.build();
         notification.flags |= Notification.FLAG_NO_CLEAR;
 
         NotificationManager notificationMgr =
