@@ -54,7 +54,8 @@ public class UpdateWeatherService extends Service {
                             String tempString = String.format(Locale.ENGLISH, "%.1f °C", temp);
                             String place = response.getString("name");
                             String country = response.getJSONObject("sys").getString("country");
-                            setWeatherLine(tempString + " in " + place + ", " + country);
+                            setPreferencesLocation(place + ", " + country);
+                            setWeatherLine(tempString);
                             setErrorLine("");
                         } catch (JSONException e) {
                             setErrorLine(getResources().getString(R.string.parsing_error) + " " +
@@ -126,6 +127,13 @@ public class UpdateWeatherService extends Service {
                 LAST_WEATHER_SHARED_PREFS, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = lastWeather.edit();
         editor.putString(TEXT_KEY, errorLine);
+        editor.apply();
+    }
+
+    private void setPreferencesLocation(String location) {
+        SharedPreferences defSharedPrefs = PreferenceManager.getDefaultSharedPreferences(this);
+        SharedPreferences.Editor editor = defSharedPrefs.edit();
+        editor.putString(SettingsFragment.KEY_PREF_LOCATION, location);
         editor.apply();
     }
 
