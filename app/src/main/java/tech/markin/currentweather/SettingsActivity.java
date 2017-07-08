@@ -19,6 +19,14 @@ public class SettingsActivity extends Activity {
             UpdateScheduler.updateAndSchedule(this);
         }
 
+        Preferences prefs = new Preferences(this);
+        if (prefs.showLocked() != prefs.showUnlocked()) {
+            ScreenStateMonitoringService.start(this);
+        }
+        if (prefs.showUnlocked()) {
+            WeatherNotification.show(this);
+        }
+
         getFragmentManager().beginTransaction()
                 .replace(android.R.id.content, new SettingsFragment())
                 .commit();
