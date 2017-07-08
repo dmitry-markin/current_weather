@@ -9,18 +9,13 @@
         <item>15 minutes</item>
         <item>30 minutes</item>
         <item>1 hour</item>
-        <item>2 hours</item>
-        <item>3 hours</item>
-        <item>4 hours</item>>
+        <!-- Other intervals (2,3,4 hours) won't work on API < 19 -->
         <item>Never</item>
     </string-array>
     <string-array name="pref_interval_values">
         <item>15</item>
         <item>30</item>
         <item>60</item>
-        <item>120</item>
-        <item>180</item>
-        <item>240</item>
         <item>0</item>
     </string-array>
     <string name="pref_interval_default">30</string>
@@ -35,12 +30,13 @@
     <string name="pref_show_lockscreen_title">Show on lock-screen</string>
     <string name="pref_show_lockscreen_summary">Show lock-screen widget</string> -->
 
-    <string name="error">Error</string>
-    <string name="unknown_error">Unknown error</string>
-    <string name="no_connection_error">No network connection</string>
-    <string name="network_error">No connection to the internet</string>
-    <string name="timeout_error">Connection timed out</string>
-    <string name="server_error">Server is down</string>
+    <string name="unknown_error">Unknown error.</string>
+    <string name="no_connection_error">No network connection.</string>
+    <string name="network_error">No connection to the internet.</string>
+    <string name="timeout_error">Network connection timed out.</string>
+    <string name="server_error">Server is down.</string>
+    <string name="parsing_error">Server response parsing error.</string>
+    <string name="update_now_hint">Tap to update now.</string>
 
     <string name="updating_weather_toast">Updating weather...</string>
 </resources>

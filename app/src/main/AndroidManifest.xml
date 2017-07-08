@@ -21,7 +21,8 @@
             </intent-filter>
         </activity>
 
-        <receiver android:name=".UpdateWeatherReceiver" />
+        <receiver android:name=".UpdateAlarmReceiver" />
+        <receiver android:name=".ForceUpdateReceiver" />
         <receiver android:name=".BootCompletedReceiver">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
