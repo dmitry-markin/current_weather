@@ -17,6 +17,7 @@ class Preferences {
     static final String KEY_PREF_INTERVAL = "pref_interval";
     static final String KEY_PREF_SHOW_LOCKED = "pref_show_locked";
     static final String KEY_PREF_SHOW_UNLOCKED = "pref_show_unlocked";
+    static final String KEY_PREF_CREDITS = "pref_credits";
 
     private SharedPreferences mPreferences;
 

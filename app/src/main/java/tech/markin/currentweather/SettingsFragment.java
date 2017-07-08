@@ -8,6 +8,7 @@
 
 package tech.markin.currentweather;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.EditTextPreference;
@@ -30,6 +31,16 @@ public class SettingsFragment extends PreferenceFragment
         // Set update interval summary
         ListPreference prefInterval = (ListPreference)findPreference(Preferences.KEY_PREF_INTERVAL);
         prefInterval.setSummary(prefInterval.getEntry());
+
+        // Set Credits item on click listener
+        final Preference creditsPref = findPreference(Preferences.KEY_PREF_CREDITS);
+        creditsPref.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+            @Override
+            public boolean onPreferenceClick(Preference preference) {
+                startActivity(new Intent(creditsPref.getContext(), CreditsActivity.class));
+                return true;
+            }
+        });
     }
 
     @Override

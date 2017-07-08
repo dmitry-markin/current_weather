@@ -35,4 +35,7 @@
         android:title="@string/pref_show_lockscreen_title"
         android:summary="@string/pref_show_lockscreen_summary"
         android:defaultValue="true" /> -->
+    <Preference
+        android:key="pref_credits"
+        android:title="@string/pref_credits_title" />
 </PreferenceScreen>

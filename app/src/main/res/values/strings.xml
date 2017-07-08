@@ -34,6 +34,8 @@
     <string name="pref_show_unlocked_title">Show when unlocked</string>
     <string name="pref_show_unlocked_summary">Show weather notification when screen is unlocked</string>
 
+    <string name="pref_credits_title">Credits</string>
+
     <!-- For android >= 4.2 and < 5.0
     <string name="pref_show_lockscreen_title">Show on lock-screen</string>
     <string name="pref_show_lockscreen_summary">Show lock-screen widget</string> -->
@@ -47,4 +49,16 @@
     <string name="update_now_hint">Tap to update now.</string>
 
     <string name="updating_weather_toast">Updating weather...</string>
+    <string name="credits_activity_title">Credits</string>
+
+    <string name="credits_html">
+        <![CDATA[<html>
+        <body>
+        <p>Weather data are provided by <a href="https://openweathermap.org/">OpenWeatherMap</a>
+        <br/>The app icon is based on the original design by
+        <a href="https://www.flaticon.com/authors/those-icons">Those&nbsp;Icons</a> from
+        <a href="https://www.flaticon.com/">Flaticon</a></p>
+        </body>
+        </html>]]>
+    </string>
 </resources>

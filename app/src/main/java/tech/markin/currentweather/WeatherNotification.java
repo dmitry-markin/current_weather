@@ -50,7 +50,7 @@ class WeatherNotification {
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context)
                 .setSmallIcon(R.drawable.icon)
                 .setContentTitle(title.isEmpty() ? "--- °C" : title)
-                .setVisibility(Notification.VISIBILITY_PUBLIC)
+                .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
                 .setContentIntent(pendingIntent)
                 .setWhen(0);
 
@@ -58,7 +58,7 @@ class WeatherNotification {
             builder.setContentText(text);
         }
 
-        Notification notification = builder.build();
+        Notification notification = builder.build(); // we need to support API v.15
         notification.flags |= Notification.FLAG_NO_CLEAR;
 
         NotificationManager notificationMgr =
