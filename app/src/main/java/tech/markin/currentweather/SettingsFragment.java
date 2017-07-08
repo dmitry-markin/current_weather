@@ -13,10 +13,6 @@ import android.preference.PreferenceFragment;
 
 public class SettingsFragment extends PreferenceFragment
                               implements SharedPreferences.OnSharedPreferenceChangeListener {
-    public static final String KEY_PREF_LOCATION = "pref_location";
-    public static final String KEY_PREF_INTERVAL = "pref_interval";
-    public static final String KEY_PREF_SHOW_LOCKED = "pref_show_locked";
-    public static final String KEY_PREF_SHOW_UNLOCKED = "pref_show_unlocked";
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -24,29 +20,46 @@ public class SettingsFragment extends PreferenceFragment
         addPreferencesFromResource(R.xml.preferences);
 
         // Set location summary
-        EditTextPreference prefLocation = (EditTextPreference)findPreference(KEY_PREF_LOCATION);
+        EditTextPreference prefLocation = (EditTextPreference)findPreference(Preferences.KEY_PREF_LOCATION);
         prefLocation.setSummary(prefLocation.getText());
 
         // Set update interval summary
-        ListPreference prefInterval = (ListPreference)findPreference(KEY_PREF_INTERVAL);
+        ListPreference prefInterval = (ListPreference)findPreference(Preferences.KEY_PREF_INTERVAL);
         prefInterval.setSummary(prefInterval.getEntry());
     }
 
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
-        if (key.equals(KEY_PREF_LOCATION)) {
-            Preference prefLocation = findPreference(key);
-            prefLocation.setSummary(sharedPreferences.getString(key, ""));
-            UpdateScheduler.updateAndSchedule(prefLocation.getContext());
+        Preference preference = findPreference(key);
 
-        } else if (key.equals(KEY_PREF_INTERVAL)) {
-            ListPreference prefInterval = (ListPreference)findPreference(key);
+        if (key.equals(Preferences.KEY_PREF_LOCATION)) {
+            preference.setSummary(sharedPreferences.getString(key, ""));
+
+        } else if (key.equals(Preferences.KEY_PREF_INTERVAL)) {
+            ListPreference prefInterval = (ListPreference)preference;
             int index = prefInterval.findIndexOfValue(sharedPreferences.getString(key, ""));
             prefInterval.setSummary(index >= 0
                                         ? prefInterval.getEntries()[index]
                                         : null);
-            UpdateScheduler.updateAndSchedule(prefInterval.getContext());
+
+        } else if (key.equals(Preferences.KEY_PREF_SHOW_LOCKED)
+                   || key.equals(Preferences.KEY_PREF_SHOW_UNLOCKED)) {
+            Preferences prefs = new Preferences(sharedPreferences);
+
+            if (prefs.showUnlocked() != prefs.showLocked()) {
+                ScreenStateMonitoringService.start(findPreference(key).getContext());
+            } else {
+                ScreenStateMonitoringService.stop(findPreference(key).getContext());
+            }
+
+            if (prefs.showUnlocked()) {
+                WeatherNotification.show(findPreference(key).getContext());
+            } else {
+                WeatherNotification.hide(findPreference(key).getContext());
+            }
         }
+
+        UpdateScheduler.updateAndSchedule(preference.getContext());
     }
 
     @Override
