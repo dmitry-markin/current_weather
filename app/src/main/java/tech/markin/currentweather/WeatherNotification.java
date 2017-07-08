@@ -1,3 +1,11 @@
+/*
+ * Copyright © 2017 Dmitry Markin
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
 package tech.markin.currentweather;
 
 import android.app.Notification;
@@ -7,10 +15,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.v4.app.NotificationCompat;
-
-/**
- * Created by Dmitry on 08.07.2017.
- */
 
 class WeatherNotification {
     static final int WEATHER_NOTIFICATION_ID = 1;
