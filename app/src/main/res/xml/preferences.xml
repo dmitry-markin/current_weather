@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright © 2017 Dmitry Markin
+  ~
+  ~ This Source Code Form is subject to the terms of the Mozilla Public
+  ~ License, v. 2.0. If a copy of the MPL was not distributed with this
+  ~ file, You can obtain one at http://mozilla.org/MPL/2.0/.
+  -->
+
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <EditTextPreference
+        android:key="pref_location"
+        android:title="@string/pref_location_title"
+        android:defaultValue="@string/pref_location_default"
+        android:singleLine="true" />
+    <ListPreference
+        android:key="pref_units"
+        android:title="@string/pref_units_title"
+        android:entries="@array/pref_units_names"
+        android:entryValues="@array/pref_units_values"
+        android:defaultValue="@string/pref_units_default" />
+    <ListPreference
+        android:key="pref_interval"
+        android:title="@string/pref_interval_title"
+        android:entries="@array/pref_interval_names"
+        android:entryValues="@array/pref_interval_values"
+        android:defaultValue="@string/pref_interval_default" />
+    <CheckBoxPreference
+        android:key="pref_show_locked"
+        android:title="@string/pref_show_locked_title"
+        android:summary="@string/pref_show_locked_summary"
+        android:defaultValue="true" />
+    <CheckBoxPreference
+        android:key="pref_show_unlocked"
+        android:title="@string/pref_show_unlocked_title"
+        android:summary="@string/pref_show_unlocked_summary"
+        android:defaultValue="false" />
+    <!-- For android >= 4.2 and < 5.0
+    <CheckBoxPreference
+        android:key="pref_show_lockscreen_widget"
+        android:title="@string/pref_show_lockscreen_title"
+        android:summary="@string/pref_show_lockscreen_summary"
+        android:defaultValue="true" /> -->
+    <Preference
+        android:key="pref_credits"
+        android:title="@string/pref_credits_title" />
+</PreferenceScreen>
