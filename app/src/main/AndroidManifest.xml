@@ -40,8 +40,8 @@
 
         <receiver android:name=".ScreenStateChangeReceiver" />
 
-        <activity android:name=".CreditsActivity"
-                  android:label="@string/credits_activity_title" />
+        <activity android:name=".LegalActivity"
+                  android:label="@string/legal_activity_title" />
     </application>
 
 </manifest>

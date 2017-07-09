@@ -37,7 +37,7 @@ public class SettingsFragment extends PreferenceFragment
         creditsPref.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
             @Override
             public boolean onPreferenceClick(Preference preference) {
-                startActivity(new Intent(creditsPref.getContext(), CreditsActivity.class));
+                startActivity(new Intent(creditsPref.getContext(), LegalActivity.class));
                 return true;
             }
         });
