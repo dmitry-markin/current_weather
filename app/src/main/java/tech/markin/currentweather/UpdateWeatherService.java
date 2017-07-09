@@ -32,7 +32,7 @@ import java.net.URLEncoder;
 import java.util.Locale;
 
 public class UpdateWeatherService extends Service {
-    static final String APPID = "949c2afc0a004b0908a6dbfdd4e2c9ef";
+    static final String APPID = BuildConfig.API_KEY;
 
     @Override
     public int onStartCommand(Intent intent, int flags, final int startId) {
