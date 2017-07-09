@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright © 2017 Dmitry Markin
+  ~
+  ~ This Source Code Form is subject to the terms of the Mozilla Public
+  ~ License, v. 2.0. If a copy of the MPL was not distributed with this
+  ~ file, You can obtain one at http://mozilla.org/MPL/2.0/.
+  -->
+
+<resources>
+    <string name="app_name">Текущая погода</string>
+
+    <string name="pref_location_title">Местоположение</string>
+    <string name="pref_location_default">Moscow, RU</string>
+
+    <string name="pref_units_title">Единицы измерения</string>
+    <string-array name="pref_units_names">
+        <item>градусы Цельсия</item>
+        <item>градусы Фаренгейта</item>
+    </string-array>
+    <string-array name="pref_units_values">
+        <!-- Do NOT translate values -->
+        <item>metric</item>
+        <item>imperial</item>
+    </string-array>
+    <string name="pref_units_default">metric</string>
+
+    <string name="pref_interval_title">Интервал обновления</string>
+    <string-array name="pref_interval_names">
+        <item>15 минут</item>
+        <item>30 минут</item>
+        <item>1 час</item>
+        <!-- Other intervals (2,3,4 hours) won't work on API < 19 -->
+        <item>Никогда</item>
+    </string-array>
+    <string-array name="pref_interval_values">
+        <!-- Do NOT translate values -->
+        <item>15</item>
+        <item>30</item>
+        <item>60</item>
+        <item>0</item>
+    </string-array>
+    <string name="pref_interval_default">30</string>
+
+    <string name="pref_show_locked_title">Показывать, когда заблокирован</string>
+    <string name="pref_show_locked_summary">Показывать уведомление, когда экран заблокирован</string>
+
+    <string name="pref_show_unlocked_title">Показывать, когда разблокирован</string>
+    <string name="pref_show_unlocked_summary">Показывать уведомление, когда экран разблокирован</string>
+
+    <string name="pref_credits_title">Юридическая информация</string>
+
+    <string name="unknown_error">Неизвестная ошибка.</string>
+    <string name="no_connection_error">Нет соединения для передачи данных.</string>
+    <string name="network_error">Нет доступа в интернет.</string>
+    <string name="timeout_error">Вышло время ожидания соединения.</string>
+    <string name="server_error">Сервер выключен.</string>
+    <string name="parsing_error">Ошибка интерпретации ответа сервера.</string>
+    <string name="update_now_hint">Нажмите, чтобы обновить сейчас.</string>
+
+    <string name="updating_weather_toast">Обновление информации о погоде...</string>
+    <string name="legal_activity_title">Юридическая информация</string>
+
+    <string name="credits_html">
+        <![CDATA[<html>
+        <body>
+        <p>Данные о погоде предоставлены <a href="https://openweathermap.org/">OpenWeatherMap.</a></p>
+        <p>Дизайн иконки приложения основан на работе
+        <a href="https://www.flaticon.com/authors/those-icons">Those&nbsp;Icons</a> на
+        <a href="https://www.flaticon.com/">Flaticon.</a></p>
+        <p>Приложение предоставляется на условиях лицензии <a href="https://www.mozilla.org/en-US/MPL/2.0/">
+        Mozilla Public License v.&nbsp;2.0</a>. Исходный код доступен в
+        <a href="https://github.com/dmitry-markin/current_weather">репозитории на GitHub.</a></p>
+        </body>
+        </html>]]>
+    </string>
+</resources>

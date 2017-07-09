@@ -19,6 +19,7 @@ public class LegalActivity extends Activity {
         setContentView(R.layout.activity_credits);
 
         WebView webView = (WebView)findViewById(R.id.credits_web_view);
-        webView.loadData(getString(R.string.credits_html), "text/html", "UTF-8");
+        // WebView.loadData() corrupts non-latin characters, loadDataWithBaseURL() works fine.
+        webView.loadDataWithBaseURL(null, getString(R.string.credits_html), "text/html", "UTF-8", null);
     }
 }

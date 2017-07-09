@@ -18,6 +18,7 @@
         <item>Fahrenheit</item>
     </string-array>
     <string-array name="pref_units_values">
+        <!-- Do NOT translate values -->
         <item>metric</item>
         <item>imperial</item>
     </string-array>
@@ -32,6 +33,7 @@
         <item>Never</item>
     </string-array>
     <string-array name="pref_interval_values">
+        <!-- Do NOT translate values -->
         <item>15</item>
         <item>30</item>
         <item>60</item>
@@ -47,10 +49,6 @@
 
     <string name="pref_credits_title">Legal info</string>
 
-    <!-- For android >= 4.2 and < 5.0
-    <string name="pref_show_lockscreen_title">Show on lock-screen</string>
-    <string name="pref_show_lockscreen_summary">Show lock-screen widget</string> -->
-
     <string name="unknown_error">Unknown error.</string>
     <string name="no_connection_error">No network connection.</string>
     <string name="network_error">No connection to the internet.</string>
@@ -59,7 +57,7 @@
     <string name="parsing_error">Server response parsing error.</string>
     <string name="update_now_hint">Tap to update now.</string>
 
-    <string name="updating_weather_toast">Updating weather...</string>
+    <string name="updating_weather_toast">Updating weather info...</string>
     <string name="legal_activity_title">Legal information</string>
 
     <string name="credits_html">
