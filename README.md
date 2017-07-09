@@ -4,7 +4,7 @@ Current Weather
 Description
 -----------
 
-Simple Android app that shows current outdoor temperature in the system notification. Notification is optionally restricted to show only when device is locked or unlocked. The weather data are retreived using [OpenWeatherMap API.](https://openweathermap.org/api)
+Simple Android app that shows current outdoor temperature in the system notification. Notification is optionally restricted to appear only when device is locked or unlocked. The weather data are retreived using [OpenWeatherMap API.](https://openweathermap.org/api)
 
 Android Permissions
 -------------------
