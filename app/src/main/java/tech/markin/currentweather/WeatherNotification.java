@@ -60,6 +60,7 @@ class WeatherNotification {
 
         if (!error.isEmpty()) {
             builder.setContentText(error);
+            builder.setStyle(new NotificationCompat.BigTextStyle().bigText(error));
         }
 
         Notification notification = builder.build(); // we need to support API v.15
