@@ -49,8 +49,7 @@ public class UpdateWeatherService extends Service {
                         try {
                             double temp = response.getJSONObject("main").getDouble("temp") - 273.15;
                             String tempString = String.format(Locale.ENGLISH, "%.1f °C", temp);
-                            WeatherNotification.setWeatherLine(UpdateWeatherService.this, tempString);
-                            WeatherNotification.setErrorLine(UpdateWeatherService.this, "");
+                            WeatherNotification.setWeather(UpdateWeatherService.this, tempString);
 
                             // Update location preference according to server's response
                             String place = response.getString("name");
@@ -58,7 +57,7 @@ public class UpdateWeatherService extends Service {
                             preferences.setLocation(place + ", " + country);
 
                         } catch (JSONException e) {
-                            WeatherNotification.setErrorLine(UpdateWeatherService.this,
+                            WeatherNotification.setError(UpdateWeatherService.this,
                                          getResources().getString(R.string.parsing_error) + " " +
                                          getResources().getString(R.string.update_now_hint));
                         }
@@ -94,7 +93,7 @@ public class UpdateWeatherService extends Service {
                             } else {
                                 errorStr = getResources().getString(R.string.unknown_error);
                             }
-                            WeatherNotification.setErrorLine(UpdateWeatherService.this, errorStr + " "
+                            WeatherNotification.setError(UpdateWeatherService.this, errorStr + " "
                                          + getResources().getString(R.string.update_now_hint));
                         } catch (UnsupportedEncodingException e) {
                             throw new RuntimeException(e);

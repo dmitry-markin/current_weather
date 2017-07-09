@@ -19,43 +19,47 @@ import android.support.v4.app.NotificationCompat;
 class WeatherNotification {
     static final int WEATHER_NOTIFICATION_ID = 1;
     private static final String LAST_WEATHER_SHARED_PREFS = "tech.markin.currentweather_LastWeather";
-    private static final String TITLE_KEY = "title";
-    private static final String TEXT_KEY = "text";
+    private static final String WEATHER_KEY = "weather";
+    private static final String ERROR_KEY = "error";
+    private static final String WHEN_KEY = "when";
 
-    static void setWeatherLine(Context context, String weatherLine) {
+    static void setWeather(Context context, String weatherLine) {
         SharedPreferences lastWeather = context.getSharedPreferences(
                 LAST_WEATHER_SHARED_PREFS, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = lastWeather.edit();
-        editor.putString(TITLE_KEY, weatherLine);
+        editor.putString(WEATHER_KEY, weatherLine);
+        editor.putString(ERROR_KEY, "");  // clear error
+        editor.putLong(WHEN_KEY, System.currentTimeMillis());
         editor.apply();
     }
 
-    static void setErrorLine(Context context, String errorLine) {
+    static void setError(Context context, String errorLine) {
         SharedPreferences lastWeather = context.getSharedPreferences(
                 LAST_WEATHER_SHARED_PREFS, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = lastWeather.edit();
-        editor.putString(TEXT_KEY, errorLine);
+        editor.putString(ERROR_KEY, errorLine);
         editor.apply();
     }
 
     static void show(Context context) {
         SharedPreferences lastWeather = context.getSharedPreferences(
                 LAST_WEATHER_SHARED_PREFS, Context.MODE_PRIVATE);
-        String title = lastWeather.getString(TITLE_KEY, "");
-        String text = lastWeather.getString(TEXT_KEY, "");
+        String weather = lastWeather.getString(WEATHER_KEY, "");
+        String error = lastWeather.getString(ERROR_KEY, "");
+        long when = lastWeather.getLong(WHEN_KEY, 0);
 
         Intent forceUpdateIntent = new Intent(context, ForceUpdateReceiver.class);
         PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0, forceUpdateIntent, 0);
 
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context)
                 .setSmallIcon(R.drawable.icon)
-                .setContentTitle(title.isEmpty() ? "--- °C" : title)
+                .setContentTitle(weather.isEmpty() ? "--- °C" : weather)
                 .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
                 .setContentIntent(pendingIntent)
-                .setWhen(0);
+                .setWhen(when);
 
-        if (!text.isEmpty()) {
-            builder.setContentText(text);
+        if (!error.isEmpty()) {
+            builder.setContentText(error);
         }
 
         Notification notification = builder.build(); // we need to support API v.15
