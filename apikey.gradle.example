@@ -1,5 +1,5 @@
 android {
     defaultConfig {
-        buildConfigField "String", "API_KEY", "949c2afc0a004b0908a6dbfdd4e2c9ef"
+        buildConfigField "String", "API_KEY", '"949c2afc0a004b0908a6dbfdd4e2c9ef"'
     }
 }
