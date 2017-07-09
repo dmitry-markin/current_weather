@@ -28,6 +28,10 @@ public class SettingsFragment extends PreferenceFragment
         EditTextPreference prefLocation = (EditTextPreference)findPreference(Preferences.KEY_PREF_LOCATION);
         prefLocation.setSummary(prefLocation.getText());
 
+        // Set units summary
+        ListPreference prefUnits = (ListPreference)findPreference(Preferences.KEY_PREF_UNITS);
+        prefUnits.setSummary(prefUnits.getEntry());
+
         // Set update interval summary
         ListPreference prefInterval = (ListPreference)findPreference(Preferences.KEY_PREF_INTERVAL);
         prefInterval.setSummary(prefInterval.getEntry());
@@ -49,13 +53,12 @@ public class SettingsFragment extends PreferenceFragment
 
         if (key.equals(Preferences.KEY_PREF_LOCATION)) {
             preference.setSummary(sharedPreferences.getString(key, ""));
-
+        } else if (key.equals(Preferences.KEY_PREF_UNITS)){
+            ListPreference prefUnits = (ListPreference)preference;
+            prefUnits.setSummary(prefUnits.getEntry());
         } else if (key.equals(Preferences.KEY_PREF_INTERVAL)) {
             ListPreference prefInterval = (ListPreference)preference;
-            int index = prefInterval.findIndexOfValue(sharedPreferences.getString(key, ""));
-            prefInterval.setSummary(index >= 0
-                                        ? prefInterval.getEntries()[index]
-                                        : null);
+            prefInterval.setSummary(prefInterval.getEntry());
 
         } else if (key.equals(Preferences.KEY_PREF_SHOW_LOCKED)
                    || key.equals(Preferences.KEY_PREF_SHOW_UNLOCKED)) {

@@ -14,6 +14,7 @@ import android.preference.PreferenceManager;
 
 class Preferences {
     static final String KEY_PREF_LOCATION = "pref_location";
+    static final String KEY_PREF_UNITS = "pref_units";
     static final String KEY_PREF_INTERVAL = "pref_interval";
     static final String KEY_PREF_SHOW_LOCKED = "pref_show_locked";
     static final String KEY_PREF_SHOW_UNLOCKED = "pref_show_unlocked";
@@ -37,6 +38,10 @@ class Preferences {
         SharedPreferences.Editor editor = mPreferences.edit();
         editor.putString(Preferences.KEY_PREF_LOCATION, location);
         editor.apply();
+    }
+
+    String units() {
+        return mPreferences.getString(KEY_PREF_UNITS, "metric");
     }
 
     int interval() {

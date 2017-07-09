@@ -14,6 +14,12 @@
         android:defaultValue="@string/pref_location_default"
         android:singleLine="true" />
     <ListPreference
+        android:key="pref_units"
+        android:title="@string/pref_units_title"
+        android:entries="@array/pref_units_names"
+        android:entryValues="@array/pref_units_values"
+        android:defaultValue="@string/pref_units_default" />
+    <ListPreference
         android:key="pref_interval"
         android:title="@string/pref_interval_title"
         android:entries="@array/pref_interval_names"

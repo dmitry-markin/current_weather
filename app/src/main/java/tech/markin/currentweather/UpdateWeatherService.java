@@ -37,24 +37,26 @@ public class UpdateWeatherService extends Service {
     @Override
     public int onStartCommand(Intent intent, int flags, final int startId) {
         try {
-            final Preferences preferences = new Preferences(this);
+            final Preferences prefs = new Preferences(this);
             String url = "http://api.openweathermap.org/data/2.5/weather?q=" +
-                         URLEncoder.encode(preferences.location(), "UTF-8") +
-                         "&APPID=" + APPID;
+                         URLEncoder.encode(prefs.location(), "UTF-8") +
+                         "&APPID=" + APPID +
+                         "&units=" + prefs.units();
 
             JsonObjectRequest jsonObjRequest = new JsonObjectRequest(Request.Method.GET, url, null,
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
                         try {
-                            double temp = response.getJSONObject("main").getDouble("temp") - 273.15;
-                            String tempString = String.format(Locale.ENGLISH, "%.1f °C", temp);
+                            double temp = response.getJSONObject("main").getDouble("temp");
+                            String format = prefs.units().equals("metric") ? "%.1f °C" : "%.0f °F";
+                            String tempString = String.format(Locale.ENGLISH, format, temp);
                             WeatherNotification.setWeather(UpdateWeatherService.this, tempString);
 
                             // Update location preference according to server's response
                             String place = response.getString("name");
                             String country = response.getJSONObject("sys").getString("country");
-                            preferences.setLocation(place + ", " + country);
+                            prefs.setLocation(place + ", " + country);
 
                         } catch (JSONException e) {
                             WeatherNotification.setError(UpdateWeatherService.this,

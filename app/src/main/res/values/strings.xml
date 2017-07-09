@@ -12,6 +12,17 @@
     <string name="pref_location_title">Location</string>
     <string name="pref_location_default">London, GB</string>
 
+    <string name="pref_units_title">Units</string>
+    <string-array name="pref_units_names">
+        <item>Celsius</item>
+        <item>Fahrenheit</item>
+    </string-array>
+    <string-array name="pref_units_values">
+        <item>metric</item>
+        <item>imperial</item>
+    </string-array>
+    <string name="pref_units_default">metric</string>
+
     <string name="pref_interval_title">Update interval</string>
     <string-array name="pref_interval_names">
         <item>15 minutes</item>
