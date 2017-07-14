@@ -7,7 +7,7 @@
   -->
 
 <resources>
-    <string name="app_name">Current Weather</string>
+    <string name="app_name">Outdoor Temperature</string>
 
     <string name="pref_location_title">Location</string>
     <string name="pref_location_default">London, GB</string>
@@ -42,10 +42,10 @@
     <string name="pref_interval_default">30</string>
 
     <string name="pref_show_locked_title">Show when locked</string>
-    <string name="pref_show_locked_summary">Show weather notification when screen is locked</string>
+    <string name="pref_show_locked_summary">Show temperature notification when screen is locked</string>
 
     <string name="pref_show_unlocked_title">Show when unlocked</string>
-    <string name="pref_show_unlocked_summary">Show weather notification when screen is unlocked</string>
+    <string name="pref_show_unlocked_summary">Show temperature notification when screen is unlocked</string>
 
     <string name="pref_credits_title">Legal info</string>
 
@@ -58,12 +58,12 @@
     <string name="update_now_hint">Tap to update now.</string>
 
     <string name="updating_weather_toast">Updating weather info...</string>
-    <string name="legal_activity_title">Legal information</string>
+    <string name="legal_activity_title">Legal Information</string>
 
     <string name="credits_html">
         <![CDATA[<html>
         <body>
-        <p>Weather data are provided by <a href="https://openweathermap.org/">OpenWeatherMap.</a></p>
+        <p>The weather data are provided by <a href="https://openweathermap.org/">OpenWeatherMap.</a></p>
         <p>The app icon is based on the original design by
         <a href="https://www.flaticon.com/authors/those-icons">Those&nbsp;Icons</a> from
         <a href="https://www.flaticon.com/">Flaticon.</a></p>
