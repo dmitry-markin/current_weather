@@ -49,7 +49,7 @@ public class UpdateWeatherService extends Service {
                     public void onResponse(JSONObject response) {
                         try {
                             double temp = response.getJSONObject("main").getDouble("temp");
-                            String format = prefs.units().equals("metric") ? "%.1f °C" : "%.0f °F";
+                            String format = prefs.units().equals("metric") ? "%.0f °C" : "%.0f °F";
                             String tempString = String.format(Locale.ENGLISH, format, temp);
                             WeatherNotification.setWeather(UpdateWeatherService.this, tempString);
 
